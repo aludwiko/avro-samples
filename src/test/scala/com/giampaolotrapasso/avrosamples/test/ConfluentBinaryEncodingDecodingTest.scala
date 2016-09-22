@@ -21,7 +21,6 @@ class ConfluentBinaryEncodingDecodingTest extends TestSpec {
   def deserialize[A <: Event: ToRecord: FromRecord: RecordFormat](newSchema: Schema,
                                                                   stream: ByteArrayInputStream) = {
 
-
     val version = stream.read()
     val oldSchema  = SchemaRegistry.movieChanged(version)
 
@@ -35,7 +34,7 @@ class ConfluentBinaryEncodingDecodingTest extends TestSpec {
   "ConfluentBinaryEncodingDecodingTest" should "deserialize an added field V1(title, year) to V2(title, year, director) " in {
     val obj                = MovieChangedV1(title, year)
     val bytes: Array[Byte] = ConfluentBinarySerializer.serializeV1(obj)
-    
+
     val in = new SeekableByteArrayInput(bytes)
 
     val result = deserialize[MovieChangedV2](SchemaRegistry.movieChanged(2), in)

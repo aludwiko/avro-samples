@@ -20,7 +20,7 @@ object SchemaRegistry {
           |  "namespace" : "foo.bar",
           |  "fields" : [
           |   { "name" : "title", "type" : "string" },
-          |   { "name" : "year", "type" : "int" }
+          |   { "name" : "year", "type" : "int" , "default": 2001}
           |  ]
           |}
       """.stripMargin.toSchema,
@@ -33,7 +33,7 @@ object SchemaRegistry {
           |  "namespace" : "foo.bar",
           |  "fields" : [
           |   { "name" : "title", "type" : "string" },
-          |   { "name" : "year", "type" : "int" },
+          |   { "name" : "year", "type" : "int", "default": 2002 },
           |   { "name" : "director", "type" : "string", "default": "unknown" }
           |  ]
           |}
@@ -47,7 +47,7 @@ object SchemaRegistry {
           |  "namespace" : "foo.bar",
           |  "fields" : [
           |   { "name" : "title", "type" : "string"},
-          |   { "name" : "released_year", "type" : "int", "aliases" : ["year"] },
+          |   { "name" : "released_year", "type" : "int", "aliases" : ["year"], "default": 1972 },
           |   { "name" : "director", "type" : "string", "default" : "unknown" }
           |  ]
           |}
