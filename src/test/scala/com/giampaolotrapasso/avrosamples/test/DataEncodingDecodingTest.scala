@@ -11,17 +11,19 @@ import org.apache.avro.file.SeekableByteArrayInput
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
 import org.apache.avro.io.DecoderFactory
 
-class SerializationWithSchemaTest extends TestSpec {
+class DataEncodingDecodingTest extends TestSpec {
 
   val title     = "Raiders of lost ark"
   val year      = 1986
   val director  = "Spielberg"
   val wonOscars = 1
 
-  "WithSchemaSerializationTest" should "deserialize an added field V1(title, year) to V2(title, year, director) " in {
+  "DataEncodingDecodingTest" should "deserialize an added field V1(title, year) to V2(title, year, director) " in {
     val obj                = MovieChangedV1(title, year)
     val bytes: Array[Byte] = DataWithSchemaSerializer.serializeV1(obj)
     val s                  = AvroInputStream.data[MovieChangedV2](bytes)
+
+    // println("*** SIZE:" + bytes.length)
 
     val events = s.iterator.toList
     val result = events(0)

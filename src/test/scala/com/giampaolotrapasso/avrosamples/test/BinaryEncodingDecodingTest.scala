@@ -13,7 +13,7 @@ import org.apache.avro.file.SeekableByteArrayInput
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
 import org.apache.avro.io.DecoderFactory
 
-class CompatibilityTest extends TestSpec {
+class BinaryEncodingDecodingTest extends TestSpec {
 
   val title     = "Raiders of lost ark"
   val year      = 1986
@@ -30,9 +30,10 @@ class CompatibilityTest extends TestSpec {
     format.from(record)
   }
 
-  "WithSchemaSerializationTest" should "deserialize an added field V1(title, year) to V2(title, year, director) " in {
+  "BinaryEncodingDecodingTest" should "deserialize an added field V1(title, year) to V2(title, year, director) " in {
     val obj                = MovieChangedV1(title, year)
     val bytes: Array[Byte] = BinarySerializer.serializeV1(obj)
+    // println("*** SIZE" + bytes.length)
 
     val in = new SeekableByteArrayInput(bytes)
 
