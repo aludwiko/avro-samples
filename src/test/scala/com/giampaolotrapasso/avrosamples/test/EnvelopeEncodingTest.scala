@@ -1,8 +1,10 @@
 package com.giampaolotrapasso.avrosamples.test
 
+import com.giampaolotrapasso.avrosamples.envelope.Envelope.Payload
 import com.giampaolotrapasso.avrosamples.envelope.{Envelope, EnvelopeSerializer, Order}
 import com.giampaolotrapasso.avrosamples.serializers.BinarySerializer
 import org.apache.avro.file.SeekableByteArrayInput
+import shapeless.{Coproduct, HNil}
 
 
 class EnvelopeEncodingTest extends TestSpec {
@@ -15,14 +17,14 @@ class EnvelopeEncodingTest extends TestSpec {
 
 
   val order                = Order(1, "book", 2)
-  val envelope = Envelope[Order](id = 1, envType = "Order", version = 1, message = order)
+  val envelope = Envelope(id = "1", envType = "Order", version = 1, message = Coproduct[Payload](order))
 
-  val bytes: Array[Byte] = EnvelopeSerializer.serializeOrder(envelope)
-  println("*** SIZE" + bytes.length)
+  val bytes: Array[Byte] = EnvelopeSerializer.serialize(envelope)
+  // println("*** SIZE" + bytes.length)
 
   import com.sksamuel.avro4s.AvroSchema
-  val schema = AvroSchema[Envelope[Order]]
-  println("schema " + schema)
+  val schema = AvroSchema[Envelope]
+  // println("schema " + schema)
 /*
   val in = new SeekableByteArrayInput(bytes)
 
