@@ -3,9 +3,7 @@ package com.giampaolotrapasso.avrosamples.envelope
 import java.io.ByteArrayOutputStream
 
 import com.giampaolotrapasso.avrosamples.envelope.Envelope.Payload
-import com.giampaolotrapasso.avrosamples.events.MovieChangedV1
-import com.giampaolotrapasso.avrosamples.serializers.EventSerializer
-import com.sksamuel.avro4s.AvroOutputStream
+import com.sksamuel.avro4s.{AvroInputStream, AvroOutputStream}
 import shapeless.{:+:, CNil}
 
 trait Message
@@ -31,5 +29,9 @@ object EnvelopeSerializer {
     avro.write(o.asInstanceOf[Envelope])
     avro.close()
     output.toByteArray
+  }
+
+  def deserialize(array: Array[Byte]): Envelope = {
+    AvroInputStream.data[Envelope](array).iterator().next()
   }
 }
