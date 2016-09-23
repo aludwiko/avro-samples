@@ -2,8 +2,6 @@ package com.giampaolotrapasso.avrosamples
 
 import org.apache.avro.Schema
 
-
-
 object SchemaRegistry {
 
   implicit class StringToSchema(json: String) {

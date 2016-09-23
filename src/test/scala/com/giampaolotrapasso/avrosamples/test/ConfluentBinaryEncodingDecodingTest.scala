@@ -18,11 +18,10 @@ class ConfluentBinaryEncodingDecodingTest extends TestSpec {
   val director  = "Spielberg"
   val wonOscars = 1
 
-  def deserialize[A <: Event: ToRecord: FromRecord: RecordFormat](newSchema: Schema,
-                                                                  stream: ByteArrayInputStream) = {
+  def deserialize[A <: Event: ToRecord: FromRecord: RecordFormat](newSchema: Schema, stream: ByteArrayInputStream) = {
 
-    val version = stream.read()
-    val oldSchema  = SchemaRegistry.movieChanged(version)
+    val version   = stream.read()
+    val oldSchema = SchemaRegistry.movieChanged(version)
 
     val gdr                   = new GenericDatumReader[GenericRecord](oldSchema, newSchema)
     val binDecoder            = DecoderFactory.get().binaryDecoder(stream, null)
